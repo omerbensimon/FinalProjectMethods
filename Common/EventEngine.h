@@ -4,9 +4,6 @@
 #include <Windows.h>
 
 class EventEngine {
-public:
-	EventEngine(DWORD input = STD_INPUT_HANDLE, DWORD output = STD_OUTPUT_HANDLE);
-	void run(Control& control);
 private:
 	Graphics graphics;
 	HANDLE console;
@@ -14,4 +11,7 @@ private:
 
 	void onChangeFocuse(Control &src, Control *dst);
 
+public:
+	EventEngine(DWORD input = STD_INPUT_HANDLE, DWORD output = STD_OUTPUT_HANDLE);
+	void run(Control& control);
 };

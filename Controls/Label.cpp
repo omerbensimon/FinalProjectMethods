@@ -1,22 +1,21 @@
-#include "Label.h"
 #include <iostream>
+#include "Label.h"
 
-Label::Label(string value) : Control(), value(value) {};
-
-string Label::getValue()
-{
-    return this->value;
+Label::Label(int width) : Control(LABEL_HEIGHT, width) {
+	setCanGetFocus(false);
 }
 
-void Label::setValue(string value)
-{
-    this->value = value;
+string Label::getText() const {
+	return label_text;
 }
 
+void Label::setText(string value) {
+	label_text = value.substr(0, getWidth());
+}
 
-void Label::draw(Graphics& g, int x, int y, size_t z)
-{
-    if (!z)
-        g.write(value);
-
+void Label::draw(Graphics &g, int left, int top, size_t layer) const {
+	if (layer == getLayer() && isVisible()) {
+		Control::draw(g, left, top, layer);
+		g.write(getLeft() + left, getTop() + top, label_text + string(getWidth() - label_text.size(), ' '));
+	}
 }

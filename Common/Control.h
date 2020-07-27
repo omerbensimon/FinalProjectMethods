@@ -5,6 +5,18 @@
 using namespace std;
 class Control
 {
+private:
+	int _left;
+	int _top;
+	int _width;
+	int _height;
+	size_t _layer;
+	BorderType _border;
+	Color _background;
+	Color _foreground;
+	bool _visible;
+	bool _canGetFocus;
+	static Control* _focus;
 protected:
 	Control(int height, int width);
 	virtual ~Control() = default;
@@ -35,22 +47,8 @@ public:
 	virtual void setCanGetFocus(bool canGetFocus); // TODO: set to protected
 	virtual void draw(Graphics &g, int left, int top, size_t layer) const;
 	virtual void mousePressed(int x, int y, bool isLeft);
-	virtual void keyDown(int keyCode, char character);
+	virtual void keyDown(int keyCode, char keychar);
 	virtual string getText() const { return string(""); };
-
-private:
-	int _left;
-	int _top;
-	int _width;
-	int _height;
-	size_t _layer;
-	BorderType _border;
-	Color _background;
-	Color _foreground;
-	bool _visible;
-	bool _canGetFocus;
-	static Control* _focus;
-
 };
 
 
