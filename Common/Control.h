@@ -1,30 +1,56 @@
 #pragma once
-#include "Graphics.h"
 #include <vector>
-
+#include "Graphics.h"
+#include "BorderFactory.h"
 using namespace std;
-
 class Control
 {
-
 protected:
-	short left;
-	short top;
-	
+	Control(int height, int width);
+	virtual ~Control() = default;
 public:
-	Control();
-	static Control* getFocus() { return NULL; };
-	static void setFocus(Control& control) {};
-	
-	
+	virtual void show();
+	virtual void hide();
+	virtual bool isVisible() const;
+	virtual Color getForeground() const;
+	virtual void setForeground(Color color);
+	virtual Color getBackground() const;
+	virtual void setBackground(Color color);
+	virtual void setBorder(BorderType border);
+	virtual BorderType getBorder();
+	static Control* getFocus();
+	static void setFocus(Control &control);
+	virtual void getAllControls(vector<Control*>* controls);
+	int getLeft() const;
+	virtual void setLeft(int left);
+	int getTop() const;
+	virtual void setTop(int top);
+	int getWidth() const;
+	virtual void setWidth(int width);
+	int getHeight() const;
+	virtual void setHeight(int height);
+	size_t getLayer() const;
+	virtual void setLayer(size_t layer);
+	virtual bool canGetFocus() const;
+	virtual void setCanGetFocus(bool canGetFocus); // TODO: set to protected
+	virtual void draw(Graphics &g, int left, int top, size_t layer) const;
+	virtual void mousePressed(int x, int y, bool isLeft);
+	virtual void keyDown(int keyCode, char character);
+	virtual string getText() const { return string(""); };
 
-	virtual void draw(Graphics& g, int x, int y, size_t z) {};
-	virtual void mousePressed(int x, int y, bool isLeft) {};
-	virtual void keyDown(int keyCode, char charecter) {};
-	virtual short getLeft() { return 0; };
-	virtual short getTop() { return 0; };
-	virtual void getAllControls(vector<Control*>* controls) {};
-	virtual bool canGetFocus() { return FALSE; };
-	~Control();
+private:
+	int _left;
+	int _top;
+	int _width;
+	int _height;
+	size_t _layer;
+	BorderType _border;
+	Color _background;
+	Color _foreground;
+	bool _visible;
+	bool _canGetFocus;
+	static Control* _focus;
+
 };
+
 
