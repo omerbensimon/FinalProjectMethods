@@ -1,60 +1,59 @@
 #include "EventEngine.h"
-#include <vector>
-#include <algorithm>
+#include <iostream>;
 using namespace std;
 
-EventEngine::EventEngine(DWORD input, DWORD output)
-	: _console(GetStdHandle(input)), _graphics(output)
-{
-	GetConsoleMode(_console, &_consoleMode);
-	SetConsoleMode(_console, ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT);
+EventEngine::EventEngine(DWORD i_word, DWORD o_word)
+	:console(GetStdHandle(i_word)), graphics(o_word) {
+	GetConsoleMode(console,&mode);
+	SetConsoleMode(console, ENABLE_EXTENDED_FLAGS | ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT);
+
 }
 
-void EventEngine::run(Control &c)
-{
-	for (bool redraw = true;;)
-	{
-		if (redraw)
+void EventEngine::run(Control& control) {
+	bool paint_again = true;
+		while (paint_again)
 		{
-			_graphics.clearScreen();
-			_graphics.setCursorVisibility(false);
-			for (size_t z = 0; z < 5; ++z)
-			{
-				c.draw(_graphics, 0, 0, z);
-			}	
-			redraw = false;
+		if (paint_again) {
+			graphics.setCursorVisibility(false);
+			graphics.clearScreen();
+			for (size_t i = 0; i < 5; i++) {
+				control.draw(graphics, control.getLeft(), control.getTop(), i);
+			}
+			paint_again= false;
 		}
 
-		INPUT_RECORD record;
-		DWORD count;
-		ReadConsoleInput(_console, &record, 1, &count);
-		switch (record.EventType)
-		{
+		INPUT_RECORD input_record;
+		KEY_EVENT_RECORD key_event_record;
+		DWORD flags = ENABLE_EXTENDED_FLAGS | ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT;
+
+		ReadConsoleInput(console, &input_record, 1, &flags);
+		key_event_record.bKeyDown = input_record.Event.KeyEvent.bKeyDown;
+		switch (input_record.EventType && key_event_record.bKeyDown) {
 		case KEY_EVENT:
 		{
-			auto f = Control::getFocus();
-			if (f != nullptr && record.Event.KeyEvent.bKeyDown)
-			{
-				auto code = record.Event.KeyEvent.wVirtualKeyCode;
-				auto chr = record.Event.KeyEvent.uChar.AsciiChar;
-				if (code == VK_TAB)
-					moveFocus(c, f);
-				else
-					f->keyDown(code, chr);
-				redraw = true;
+			Control* focused = Control::getFocus();
+			auto rec_code = input_record.Event.KeyEvent.wVirtualKeyCode;
+			auto rec_asciiChar = input_record.Event.KeyEvent.uChar.AsciiChar;
+			if (rec_code == VK_TAB) {
+				onChangeFocuse(control, focused);
+			}
+			else {
+				focused->keyDown(rec_code, rec_asciiChar);
+				paint_again = true;
 			}
 			break;
 		}
 		case MOUSE_EVENT:
 		{
-			auto button = record.Event.MouseEvent.dwButtonState;
-			auto coord = record.Event.MouseEvent.dwMousePosition;
-			auto x = coord.X - c.getLeft();
-			auto y = coord.Y - c.getTop();
-			if (button == FROM_LEFT_1ST_BUTTON_PRESSED || button == RIGHTMOST_BUTTON_PRESSED)
-			{
-				c.mousePressed(x, y, button == FROM_LEFT_1ST_BUTTON_PRESSED);
-				redraw = true;
+			COORD pos = input_record.Event.MouseEvent.dwMousePosition;
+			auto btn = input_record.Event.MouseEvent.dwButtonState;
+			
+			int y = pos.Y - control.getTop();
+			int x = pos.X - control.getLeft();
+
+			if (btn == FROM_LEFT_1ST_BUTTON_PRESSED || btn == RIGHTMOST_BUTTON_PRESSED) {
+				control.mousePressed(x, y, btn == FROM_LEFT_1ST_BUTTON_PRESSED);
+				paint_again= true;
 			}
 			break;
 		}
@@ -64,19 +63,16 @@ void EventEngine::run(Control &c)
 	}
 }
 
-EventEngine::~EventEngine()
-{
-	SetConsoleMode(_console, _consoleMode);
-}
-
-void EventEngine::moveFocus(Control &main, Control *focused)
-{
+void EventEngine::onChangeFocuse(Control &src, Control *dst) {
 	vector<Control*> controls;
-	main.getAllControls(&controls);
-	auto it = find(controls.begin(), controls.end(), focused);
-	do
-		if (++it == controls.end())
+	src.getAllControls(&controls);
+
+	auto it = find(controls.begin(), controls.end(), dst);
+	do {
+		if (++it == controls.end()) {
 			it = controls.begin();
-	while (!(*it)->canGetFocus());
+		}
+	} while (!(*it)->canGetFocus());
 	Control::setFocus(**it);
 }
+
