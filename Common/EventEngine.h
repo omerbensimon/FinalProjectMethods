@@ -1,19 +1,17 @@
 #pragma once
-
 #include "Control.h"
-#include <windows.h>
 #include "Graphics.h"
+#include <Windows.h>
 
-class EventEngine
-{
+class EventEngine {
 public:
 	EventEngine(DWORD input = STD_INPUT_HANDLE, DWORD output = STD_OUTPUT_HANDLE);
-	void run(Control& c);
-	virtual ~EventEngine();
+	void run(Control& control);
 private:
-	void moveFocus(Control &main, Control *focused);
+	Graphics graphics;
+	HANDLE console;
+	DWORD mode;
 
-	Graphics _graphics;
-	HANDLE _console;
-	DWORD _consoleMode;
+	void onChangeFocuse(Control &src, Control *dst);
+
 };
