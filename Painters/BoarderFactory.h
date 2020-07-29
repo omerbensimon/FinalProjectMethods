@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 #include "BorderPainter.h"
-#include "BorderPainter.h"
+#include "SingleBorderPainter.h"
 #include "DoubleBorderPainter.h"
 #include "NullBorderPainter.h"
 #include "Exceptions.h"
