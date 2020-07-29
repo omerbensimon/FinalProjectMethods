@@ -13,20 +13,20 @@ enum class BorderType {
 
 class BorderFactory {
 public:
-	static BorderFactory& getInstance() {
+	static BorderFactory& getInstance() { // get BorderFactory object
 		static BorderFactory factory;
 		return factory;
 	}
 
-	const BorderPainter& getSBoarderPainter() {
+	const BorderPainter& getSBoarderPainter() { // get SingleBorderFactory object
 		return sBorderPainter;
 	}
 
-	const BorderPainter& getDBorderPainter() {
+	const BorderPainter& getDBorderPainter() { // get DoubleBorderFactory object
 		return dBorderPainter;
 	}
 
-	const BorderPainter& getNull() {
+	const BorderPainter& getNull() { 
 		return _null;
 	}
 
