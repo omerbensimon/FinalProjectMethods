@@ -14,6 +14,7 @@ CheckList::CheckList(int height, int width, vector<string> options) :
 		btnOption->setText("[ ] " + options[i]);
 		btnOption->addListener(*listener);
 		addControl(*btnOption, 0, i);
+		i++
 	}
 	setCanGetFocus(true);
 }
