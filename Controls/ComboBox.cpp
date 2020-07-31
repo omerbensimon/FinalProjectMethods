@@ -17,6 +17,7 @@ ComboBox::ComboBox(int width, vector<string> options) :
 		btnOption->addListener(*listener);
 		btnOption->setLayer(4);
 		_pnlOptions.addControl(*btnOption, 0, i);
+		i++
 	}
 	_pnlOptions.setLayer(4);
 	addControl(_btnValue, 0, 0);
