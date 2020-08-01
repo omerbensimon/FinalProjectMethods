@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Graphics.h"
 Graphics::Graphics(DWORD stdHandle)
 	: _console(GetStdHandle(stdHandle)), _background(Color::Black), _foreground(Color::White)

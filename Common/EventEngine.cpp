@@ -1,5 +1,7 @@
 #include "EventEngine.h"
-#include <iostream>;
+#include <iostream>
+#include <algorithm>
+
 using namespace std;
 
 EventEngine::EventEngine(DWORD i_word, DWORD o_word)

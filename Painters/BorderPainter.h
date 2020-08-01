@@ -1,5 +1,5 @@
-#pragma once
-#include "Graphics.h"
+
+#include "../Common/Graphics.h"
 
 class BorderPainter {
 public:

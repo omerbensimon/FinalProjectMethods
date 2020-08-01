@@ -1,7 +1,10 @@
 #pragma once
+
 #include <vector>
-#include "Graphics.h"
-#include "BorderFactory.h"
+#include "../Common/Graphics.h"
+#include "../Painters/BoarderFactory.h"
+
+
 using namespace std;
 class Control
 {
@@ -44,7 +47,7 @@ public:
 	size_t getLayer() const;
 	virtual void setLayer(size_t layer);
 	virtual bool canGetFocus() const;
-	virtual void setCanGetFocus(bool canGetFocus); // TODO: set to protected
+	virtual void setCanGetFocus(bool canGetFocus); 
 	virtual void draw(Graphics &g, int left, int top, size_t layer) const;
 	virtual void mousePressed(int x, int y, bool isLeft);
 	virtual void keyDown(int keyCode, char keychar);

@@ -1,5 +1,4 @@
-#include "stdafx.h"
-#include "DoubleBorderPainter.h"
+#include "../Painters/DoubleBorderPainter.h"
 
 
 DoubleBorderPainter::DoubleBorderPainter() {

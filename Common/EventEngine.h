@@ -1,7 +1,9 @@
 #pragma once
+
+#include <Windows.h>
 #include "Control.h"
 #include "Graphics.h"
-#include <Windows.h>
+
 
 class EventEngine {
 private:

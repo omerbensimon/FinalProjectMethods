@@ -1,14 +1,14 @@
-#include "Panel.h"
-#include "Label.h"
-#include "TextBox.h"
-#include "Button.h"
-#include "NumericBox.h"
-#include "EventEngine.h"
-#include "ComboBox.h"
-#include "CheckList.h"
-#include "RadioBox.h"
 #include <fstream>
-#include "MessageBoxPanel.h"
+#include "../Controls/Panel.h"
+#include "../Controls/Label.h"
+#include "../Controls/TextBox.h"
+#include "../Controls/Button.h"
+#include "../Controls/NumericBox.h"
+#include "../Common/EventEngine.h"
+#include "../Controls/ComboBox.h"
+#include "../Controls/CheckList.h"
+#include "../Controls/RadioBox.h"
+#include "../Controls/MessageBoxPanel.h"
 
 MessageBoxPanel msg(15, 30);
 
