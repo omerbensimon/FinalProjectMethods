@@ -24,7 +24,7 @@ public:
 NumericBox::NumericBox(int width, int min, int max) :
 	Panel(HEIGHT, width),
 	_btnMinus(1), _lblValue(width - 2), _btnPlus(1),
-	_value(min), _min(0), _max(max)
+	_value(min), _min(min), _max(max)
 {
 	if (width < 3)
 	{
@@ -48,11 +48,11 @@ void NumericBox::setValue(int value)
 {
 	if (value > _max)
 	{
-		_value = _max-10;
+		_value = _max;
 	}
-	else if (value < 0)
+	else if (value < _min)
 	{
-		_value = 0;
+		_value = _min;
 	}
 
 	else
