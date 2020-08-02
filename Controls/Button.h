@@ -4,23 +4,23 @@
 
 using namespace std;
 
-
 class Button : public Label
 {
 private:
-	vector<struct MouseListener*> listeners;
+	vector<struct Listener*> listeners;
 
 public:
 
     Button(int width);
     virtual ~Button() = default;
     
-    void addListener(struct MouseListener &listener);
-    virtual void mousePressed(int x, int y, bool isLeft);
+    void addListener(struct Listener &listener);
+    virtual void Pressed();
+	virtual void keyDown(int keyCode, char character);
 
 };
 
-struct MouseListener
+struct Listener
 {
-	virtual void mousePressed(Button &button, int x, int y, bool isLeft) = 0;
+	virtual void Pressed(Button &b) = 0;
 };

@@ -7,6 +7,7 @@ ComboBox::ComboBox(int width, vector<string> options) :
 	_selectedIndex(0), _options(options), _listBorder(BorderType::NONE), _listIndex(0), _oldLayer(0) {
 	struct ShowListListener* listener = new struct ShowListListener(*this);
 	_btnValue.addListener(*listener);
+	_btnValue.setText("^");
 	_pnlOptions.hide();
 	int i = 0;
 	while (i < options.size())
@@ -22,7 +23,7 @@ ComboBox::ComboBox(int width, vector<string> options) :
 	_pnlOptions.setLayer(4);
 	addControl(_btnValue, 0, 0);
 	addControl(_pnlOptions, 0, 1);
-	setCanGetFocus(true);
+	setCanGetFocus(false);
 }
 
 size_t ComboBox::getSelectedIndex() const {
@@ -64,8 +65,8 @@ void ComboBox::setBorder(BorderType border) {
 		_btnValue.setBorder(_listBorder); }
 }
 
-void ComboBox::mousePressed(int x, int y, bool isLeft) {
-	Panel::mousePressed(x, y, isLeft);
+void ComboBox::Pressed() {
+	Panel::Pressed();
 }
 
 void ComboBox::keyDown(int keyCode, char character) {

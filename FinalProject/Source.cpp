@@ -9,29 +9,37 @@
 #include "../Controls/CheckList.h"
 #include "../Controls/RadioBox.h"
 #include "../Controls/MessageBoxPanel.h"
+using namespace std;
 
-MessageBoxPanel msg(15, 30);
+MessageBoxPanel messageBox(20, 30);
 
-struct Listener : public MouseListener
+
+static int applicationCounter = 1;
+
+struct FormListener : public Listener
 {
-	Listener(Panel &panel) : _panel(panel) {
-		static int count;
-		count = 0;
-		out.open("order.txt", ofstream::out | ofstream::app);
+	FormListener(Panel &panel) : _panel(panel) {}
 
-	}
-	void mousePressed(Button &btn, int x, int y, bool isLeft) {
+	void Pressed(Button &btn) {
+		string app = "application" + to_string(applicationCounter) + ".txt";
+		out.open(app, ofstream::out);
 		vector<Control*> controls;
 		_panel.getAllControls(&controls);
-		auto it = controls.begin();
-		while (it != controls.end()) {
-			out << (**it).getText() << "\n";
-			it++;
-		}
-		msg.show();
-	};
-	~Listener() {
+	
+		out << (*controls[0]).getText() << "\n";
+		out << "Name: " << (*controls[1]).getText() << "\n";
+		out << "Email :" << (*controls[0]).getText() << "\n";
+		out << "Age: " << (*controls[6]).getText() << "\n";
+		out << "Sex :" << (*controls[9]).getText() << "\n";
+		out << "Degree :" << (*controls[16]).getText() << "\n";
+		out << "Programming Languages:" << (*controls[18]).getText() << "\n";
+		
+		messageBox.show();
 		out.close();
+		applicationCounter++;
+
+	};
+	~FormListener() {
 	}
 
 private:
@@ -41,86 +49,89 @@ private:
 
 int main()
 {
-	Panel form;
-	Label label(50);
-	label.setText("Where you wants to FLY?!");
-	form.addControl(label, 1, 1);
+	Panel applicationForm;
+	Label headerLabel(30);
+	headerLabel.setText("Job Application Form:");
+	applicationForm.addControl(headerLabel, 1, 1);
 
-	TextBox from(20);
-	from.setBorder(BorderType::SINGEL);
-	from.setText("From");
-	form.addControl(from, 2, 3);
+	TextBox name(20);
+	name.setBorder(BorderType::SINGEL);
+	name.setText("Name");
+	applicationForm.addControl(name, 2, 3);
 
-	TextBox to(20);
-	to.setBorder(BorderType::SINGEL);
-	to.setText("To");
-	form.addControl(to, 25, 3);
+	TextBox email(20);
+	email.setBorder(BorderType::SINGEL);
+	email.setText("Email");
+	applicationForm.addControl(email, 2, 6);
 
-	Label label2(50);
-	label2.setText("Num Of Passengers:");
-	form.addControl(label2, 1, 5);
+	Label ageLabel(50);
+	ageLabel.setText("Age:");
+	applicationForm.addControl(ageLabel, 1, 8);
 
-	NumericBox numeric(5, 10, 20);
-	numeric.setBorder(BorderType::SINGEL);
-	form.addControl(numeric, 2, 7);
+	NumericBox ageNumericBox(5, 18, 60);
+	ageNumericBox.setBorder(BorderType::SINGEL);
+	applicationForm.addControl(ageNumericBox, 2, 10);
 
-	Label label3(50);
-	label3.setText("Class:");
-	form.addControl(label3, 1, 9);
+	Label sexLabel(10);
+	sexLabel.setText("Sex:");
+	applicationForm.addControl(sexLabel, 1, 12);
 
-	vector<string> options = {
-		"Economy",
-		"Business",
-		"Exclusive"
-	};
-	ComboBox cb(10, options);
-	cb.setBorder(BorderType::SINGEL);
-	form.addControl(cb, 2, 11);
-
-
-	msg.setBorder(BorderType::DOUBLE);
-	msg.setTitle("ThankYou!");
-	msg.setText("Enjoy From your vaction!");
-	form.addControl(msg, 40, 7);
-
-
-	Label label4(10);
-	label4.setText("includes:");
-	form.addControl(label4, 17, 9);
-
-	vector<string> options2 = {
-		"Luggages",
-		"Insurance lost",
-		"Accident insurance",
-		"Pet cage"
+	vector<string> sexOptions = {
+		"Male",
+		"Female"
 	};
 
-	CheckList cl(5, 20, options2);
-	cl.setBorder(BorderType::NONE);
-	form.addControl(cl, 18, 10);
+	RadioBox sexRL(5, 20, sexOptions);
+	applicationForm.addControl(sexRL, 2, 13);
+
+	Label degreeLabel(50);
+	degreeLabel.setText("Degree:");
+	applicationForm.addControl(degreeLabel, 1, 15);
+
+	vector<string> degreeOptions = {
+		"Associate",
+		"Bachelor's",
+		"Master's"
+	};
+	ComboBox degreeCB(12, degreeOptions);
+	degreeCB.setBorder(BorderType::SINGEL);
+	applicationForm.addControl(degreeCB, 2, 17);
 
 
-	vector<string> options3 = {
-		"One Way",
-		"Round Trip"
+	Label languageLabel(24);
+	languageLabel.setText("programming languages:");
+	applicationForm.addControl(languageLabel, 1, 19);
+
+	vector<string> languageOptions = {
+		"C++",
+		"JAVA",
+		"PYTHON",
+		"JS"
 	};
 
-	RadioBox rl(5, 20, options3);
-	form.addControl(rl, 2, 15);
+	CheckList languageCL(5, 20, languageOptions);
+	languageCL.setBorder(BorderType::NONE);
+	applicationForm.addControl(languageCL, 2, 20);
+
+	
 
 	Button submit(10);
 	submit.setText("Submit");
 	submit.setBorder(BorderType::DOUBLE);
-	form.addControl(submit, 2, 20);
+	applicationForm.addControl(submit, 2, 26);
 
+	messageBox.setBorder(BorderType::DOUBLE);
+	messageBox.setTitle("application has been sent");
+	messageBox.setText("ok - continue   ctl - Exit");
+	applicationForm.addControl(messageBox, 40, 7);
 	
-	Listener listener(form);
+	FormListener listener(applicationForm);
 	submit.addListener(listener);
 
-	Control::setFocus(from);
+	Control::setFocus(name);
 
 	EventEngine engine;
-	engine.run(form);
+	engine.run(applicationForm);
 
 	return 0;
 }

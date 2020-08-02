@@ -66,13 +66,13 @@ void CheckList::alterSelectedIndex(size_t index)
 		deselectIndex(index);
 	}
 }
-void CheckList::mousePressed(int x, int y, bool isLeft)
+void CheckList::Pressed()
 {
 	if (!isVisible())
 	{
 		return;
 	}
-	Panel::mousePressed(x, y, isLeft);
+	Panel::Pressed();
 	if (this != Control::getFocus())
 	{
 		_controls[_listIndex]->setBackground(getBackground());
@@ -128,7 +128,7 @@ void CheckList::setLayer(size_t layer)
 string CheckList::getText() {
 	string str = "";
 	for (auto checked : _selectedIndices) {
-		str += (checked+" ");
+		str += (_options[checked]+" ");
 	}
 	return str;
 }

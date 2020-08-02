@@ -2,8 +2,7 @@
 
 #include <vector>
 #include "../Common/Graphics.h"
-#include "../Painters/BoarderFactory.h"
-
+#include "../Painters/BorderFactory.h"
 
 using namespace std;
 class Control
@@ -49,9 +48,11 @@ public:
 	virtual bool canGetFocus() const;
 	virtual void setCanGetFocus(bool canGetFocus); 
 	virtual void draw(Graphics &g, int left, int top, size_t layer) const;
-	virtual void mousePressed(int x, int y, bool isLeft);
+	virtual void Pressed();
 	virtual void keyDown(int keyCode, char keychar);
 	virtual string getText() const { return string(""); };
+	virtual bool includeControls() const { return false; };
+
 };
 
 

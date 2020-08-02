@@ -14,7 +14,6 @@ private:
 public:
     Label(int width);               //send width to control c'tor
     virtual ~Label() = default;
-
 	virtual string getText() const;
 	void setText(string value);
 	virtual void draw(Graphics &g, int left, int top, size_t layer) const;

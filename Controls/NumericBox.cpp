@@ -1,12 +1,12 @@
 #include "Button.h"
 #include "NumericBox.h"
 
-struct NumericBoxUpdateListener : public MouseListener
+struct NumericBoxUpdateListener : public Listener
 {
 	NumericBoxUpdateListener(NumericBox &box) : _box(box)
 	{}
 
-	void mousePressed(Button &b, int x, int y, bool isLeft)
+	void Pressed(Button &b)
 	{
 		if (b.getText() == "+")
 		{
@@ -24,19 +24,24 @@ public:
 NumericBox::NumericBox(int width, int min, int max) :
 	Panel(HEIGHT, width),
 	_btnMinus(1), _lblValue(width - 2), _btnPlus(1),
-	_value(min), _min(0), _max(max-10)
+	_value(min), _min(0), _max(max)
 {
-
+	if (width < 3)
+	{
+		throw "NumericBox width must be at least 3";
+	}
+	
 	auto updateListener = new NumericBoxUpdateListener(*this);
 
 	_btnMinus.setText("-");
 	_btnMinus.addListener(*updateListener);
 	_btnPlus.setText("+");
 	_btnPlus.addListener(*updateListener);
+	_lblValue.setText(to_string(_value));
 
 	addControl(_btnMinus, 0, 0);
 	addControl(_lblValue, 1, 0);
-	addControl(_btnPlus, width - 1, 0);
+	addControl(_btnPlus, width - 2, 0);
 }
 
 void NumericBox::setValue(int value)
@@ -63,20 +68,6 @@ int NumericBox::getValue() const{	return _value;}
 int NumericBox::getMin() const{	return _min;}
 
 int NumericBox::getMax() const{	return _max;}
-
-/*void NumericBox::draw(Graphics & g, int left, int top, size_t layer) const {
-<<<<<<< HEAD
-	if (layer == getLayer() && isVisible()) {
-		Control::draw(g, left, top, layer);
-		g.write(getLeft() + left, getTop() + top, _text + string(getWidth() - _text.size(), ' '));
-	}
-=======
-if (layer == getLayer() && isVisible()) {
-Control::draw(g, left, top, layer);
-g.write(getLeft() + left, getTop() + top, _text + string(getWidth() - _text.size(), ' '));
-}
->>>>>>> e8893513d48bcce29775be9d9f4ca3555d774e5d
-}*/
 
 void NumericBox::addControl(Control & control, int left, int top)
 {

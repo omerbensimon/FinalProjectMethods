@@ -14,16 +14,16 @@ public:
 	virtual void setForeground(Color color);
 	virtual void setBackground(Color color);
 	virtual void setBorder(BorderType border);
-	virtual void mousePressed(int x, int y, bool isLeft);
+	virtual void Pressed();
 	virtual void keyDown(int keyCode, char character);
 	virtual void setLayer(size_t layer);
 	virtual string getText() const;
 protected:
 	virtual void addControl(Control& control, int left, int top);
 protected:
-	struct UpdateListener : public MouseListener {
+	struct UpdateListener : public Listener {
 		UpdateListener(ComboBox &box, size_t index) : _box(box), _index(index){}
-		void mousePressed(Button &b, int x, int y, bool isLeft) {
+		void Pressed(Button &b) {
 			_box.setSelectedIndex(_index);
 			_box.setLayer(_box._oldLayer);
 			_box._oldLayer = 0;
@@ -34,17 +34,21 @@ protected:
 		size_t _index;
 	};
 
-	struct ShowListListener : public MouseListener {
+	struct ShowListListener : public Listener {
 		ShowListListener(ComboBox &box) : _box(box){}
 
-		void mousePressed(Button &b, int x, int y, bool isLeft) {
+		void Pressed(Button &b) {
 			if (!_box._pnlOptions.isVisible()) {
+				vector<Control*> controls;
+				_box._pnlOptions.getAllControls(&controls);
 				_box._pnlOptions.show();
 				_box.Panel::setBorder(_box._listBorder);
 				_box._btnValue.setBorder(BorderType::NONE);
 				_box._oldLayer = _box.getLayer();
 				_box.setLayer(4);
 				Control::setFocus(_box);
+				controls[_box._listIndex]->setBackground(_box.getForeground());
+				controls[_box._listIndex]->setForeground(_box.getBackground());
 			}
 			else {
 				_box._pnlOptions.hide();

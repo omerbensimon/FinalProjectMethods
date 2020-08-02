@@ -23,6 +23,7 @@ MessageBoxPanel::MessageBoxPanel(int height, int width) :Panel(height, width), _
 	btnCnl->setBorder(BorderType::SINGEL);
 	Panel::addControl(*btnCnl, width - 7, 5);
 	hide();
+	Panel::setCanGetFocus(false);
 }
 
 void MessageBoxPanel::setLayer(size_t layer) {
@@ -40,4 +41,5 @@ string MessageBoxPanel::getResult() { return _result; };
 void MessageBoxPanel::show() {
 	_result = "";
 	Panel::show();
+	Panel::setCanGetFocus(true);
 }

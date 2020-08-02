@@ -1,3 +1,4 @@
+#pragma once
 
 #include "../Painters/singelBorderPainter.h"
 

@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Label.h"
 
 Label::Label(int width) : Control(LABEL_HEIGHT, width) {

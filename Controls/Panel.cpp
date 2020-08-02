@@ -7,6 +7,9 @@ Panel::Panel(int height, int width) : Control(height, width) {
 void Panel::getAllControls(vector<Control*>* controls) {
 	if (controls != nullptr) {
 		for (auto control : _controls) {
+			if (control->includeControls()) {
+				control->getAllControls(controls);
+			}
 			controls->push_back(control);
 		}
 	}
@@ -21,17 +24,15 @@ void Panel::draw(Graphics & g, int left, int top, size_t layer) const {
 	}
 }
 
-void Panel::mousePressed(int x, int y, bool isLeft) {
+void Panel::Pressed() {
 	if (!isVisible()) {
 		return;
 	}
-	if (isInside(x, y, getLeft(), getTop(), getWidth(), getHeight())) {
-		if (canGetFocus()) {
-			Control::setFocus(*this);
-		}
-		for (auto control : _controls) {
-			control->mousePressed(x - getLeft(), y - getTop(), isLeft);
-		}
+	if (canGetFocus()) {
+		Control::setFocus(*this);
+	}
+	for (auto control : _controls) {
+		control->Pressed();
 	}
 }
 

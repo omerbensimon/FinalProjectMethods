@@ -4,7 +4,6 @@
 using namespace std;
 
 class MessageBoxPanel :public Panel {
-
 public:
 	MessageBoxPanel(int height, int width);
 	virtual ~MessageBoxPanel() = default;
@@ -18,11 +17,13 @@ public:
 
 protected:
 	virtual void addControl(Control& control, int left, int top);
-	struct AnswerListener : public MouseListener {
+	struct AnswerListener : public Listener {
 		AnswerListener(MessageBoxPanel& box) :_box(box) {}
-		void mousePressed(Button& b, int x, int y, bool isLeft) {
+		void Pressed(Button& b) {
 			_box.hide();
-			_box._result = b.getText();
+			if ((_box._result = b.getText()) == "Cnl") {
+				exit(0);
+			}
 		}
 	private:
 		MessageBoxPanel& _box;

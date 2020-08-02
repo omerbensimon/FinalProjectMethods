@@ -123,10 +123,10 @@ void Control::draw(Graphics & g, int left, int top, size_t layer) const
 	}
 	g.setBackground(_background);
 	g.setForeground(_foreground);
-	const BorderPainter& borderPainter = BorderFactory::getInstance().getBoarderPainter(_border);
+	const BorderPainter& borderPainter = BorderFactory::getInstance().getBorderPainter(_border);
 	borderPainter.draw(g, getLeft() + left, getTop() + top, getWidth(), getHeight());
 }
-void Control::mousePressed(int x, int y, bool isLeft){}
+void Control::Pressed(){}
 void Control::keyDown(int keyCode, char keychar){}
 
 BorderType Control::getBorder() {

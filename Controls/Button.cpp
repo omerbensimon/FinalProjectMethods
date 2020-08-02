@@ -1,18 +1,32 @@
 #include "Button.h"
 
-Button::Button(int width) : Label(width) {}
+Button::Button(int width) : Label(width) {
+		setCanGetFocus(true);
+}
 
-void Button::addListener(MouseListener &listener) {
+void Button::addListener(Listener &listener) {
 	listeners.push_back(&listener);
 };
 
-void Button::mousePressed(int x, int y, bool isLeft) {
+void Button::Pressed() {
 
-	if (isInside(x, y, getLeft(), getTop(), getWidth(), getHeight()))
-	{
-		if (canGetFocus())	Control::setFocus(*this);
-		for (auto listener : listeners)	listener->mousePressed(*this, x, y, isLeft);
-	}
-	if (!isVisible())	
-        return;
+	if (canGetFocus())	Control::setFocus(*this);
+		for (auto listener : listeners)	listener->Pressed(*this);
+	
+	if (!isVisible())	return;
+
 }
+void Button::keyDown(int keyCode, char character) {
+	if ((this != Control::getFocus()) || !isVisible()) {
+		return;
+	}
+	switch (keyCode) {
+	case VK_SPACE:
+	case VK_RETURN:
+		for (auto listener : listeners)	listener->Pressed(*this);
+		return;
+	default:
+		break;
+	}
+}
+

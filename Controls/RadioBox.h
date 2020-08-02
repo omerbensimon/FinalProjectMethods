@@ -10,6 +10,9 @@ public:
 	virtual void setSelectedIndex(size_t index);
 	virtual void clearSelection();
 	virtual void setLayer(size_t layer);
+	virtual bool includeControls() const { return false; };
+	virtual string getText();
+
 protected:
 	virtual vector<size_t> getSelectedIndices() const;
 	virtual void selectIndex(size_t index);

@@ -72,12 +72,12 @@ void TextBox::keyDown(int keyCode, char keychar) {
 	}
 }
 
-void TextBox::mousePressed(int x, int y, bool isLeft) {
-	if (!isLeft || !isVisible()) {
-		return;
-	}
-	if (isInside(x, y, getLeft(), getTop(), getWidth(), getHeight())) {
-		Control::setFocus(*this);
-		curserPos = ((x - getLeft()) >= getText().size()) ? getText().size() - 1 : x - getLeft();
-	}
-}
+// void TextBox::mousePressed(int x, int y, bool isLeft) {
+// 	if (!isLeft || !isVisible()) {
+// 		return;
+// 	}
+// 	if (isInside(x, y, getLeft(), getTop(), getWidth(), getHeight())) {
+// 		Control::setFocus(*this);
+// 		curserPos = ((x - getLeft()) >= getText().size()) ? getText().size() - 1 : x - getLeft();
+// 	}
+// }

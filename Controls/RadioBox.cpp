@@ -34,3 +34,6 @@ void RadioBox::setLayer(size_t layer) {
 	}
 	Panel::setLayer(layer);
 }
+string RadioBox::getText() {
+	return CheckList::getText();
+}

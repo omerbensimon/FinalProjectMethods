@@ -11,18 +11,20 @@ public:
 	virtual vector<size_t> getSelectedIndices() const;
 	virtual void selectIndex(size_t index);
 	virtual void deselectIndex(size_t index);
-	virtual void mousePressed(int x, int y, bool isLeft);
+	virtual void Pressed();
 	virtual void keyDown(int keyCode, char character);
 	virtual void setLayer(size_t layer);
 	virtual string getText();
+	virtual bool includeControls() const { return false; };
+
 protected:
 	virtual void addControl(Control& control, int left, int top);
 	virtual void alterSelectedIndex(size_t index);
 protected:
-	struct UpdateListener : public MouseListener
+	struct UpdateListener : public Listener
 	{
 		UpdateListener(CheckList &box, size_t index) : _box(box), _index(index){}
-		void mousePressed(Button &b, int x, int y, bool isLeft)
+		void Pressed(Button &b)
 		{
 			_box.alterSelectedIndex(_index);
 		}

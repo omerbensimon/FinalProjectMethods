@@ -10,13 +10,11 @@ class NumericBox : public Panel
 public:
 	NumericBox(int width, int min, int max);
 	virtual ~NumericBox() = default;
-
 	virtual void setValue(int value);
 	virtual string getText() const;
 	int getValue() const;
 	virtual int getMin() const;
 	virtual int getMax() const;
-
 	virtual void setLayer(size_t layer);
 
 protected:
