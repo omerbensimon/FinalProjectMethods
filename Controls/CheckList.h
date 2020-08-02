@@ -14,7 +14,7 @@ public:
 	virtual void Pressed();
 	virtual void keyDown(int keyCode, char character);
 	virtual void setLayer(size_t layer);
-	virtual string getText();
+	virtual string getText() const;
 	virtual bool includeControls() const { return false; };
 
 protected:

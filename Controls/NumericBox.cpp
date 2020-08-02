@@ -40,8 +40,8 @@ NumericBox::NumericBox(int width, int min, int max) :
 	_lblValue.setText(to_string(_value));
 
 	addControl(_btnMinus, 0, 0);
-	addControl(_lblValue, 1, 0);
-	addControl(_btnPlus, width - 2, 0);
+	addControl(_btnPlus, 1, 0);
+	addControl(_lblValue, width -2, 0);
 }
 
 void NumericBox::setValue(int value)

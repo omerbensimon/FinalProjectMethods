@@ -28,7 +28,7 @@ struct FormListener : public Listener
 	
 		out << (*controls[0]).getText() << "\n";
 		out << "Name: " << (*controls[1]).getText() << "\n";
-		out << "Email :" << (*controls[0]).getText() << "\n";
+		out << "Email :" << (*controls[2]).getText() << "\n";
 		out << "Age: " << (*controls[6]).getText() << "\n";
 		out << "Sex :" << (*controls[9]).getText() << "\n";
 		out << "Degree :" << (*controls[16]).getText() << "\n";

@@ -11,7 +11,7 @@ public:
 	virtual void clearSelection();
 	virtual void setLayer(size_t layer);
 	virtual bool includeControls() const { return false; };
-	virtual string getText();
+	virtual string getText() const;
 
 protected:
 	virtual vector<size_t> getSelectedIndices() const;

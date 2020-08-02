@@ -125,7 +125,7 @@ void CheckList::setLayer(size_t layer)
 	Panel::setLayer(layer);
 }
 
-string CheckList::getText() {
+string CheckList::getText() const {
 	string str = "";
 	for (auto checked : _selectedIndices) {
 		str += (_options[checked]+" ");
